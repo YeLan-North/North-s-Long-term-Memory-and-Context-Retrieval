@@ -1,0 +1,30 @@
+{
+  "reference_date": "2026-10-18",
+  "openviking": {
+    "package": "openviking==0.5.0",
+    "pypi": "https://pypi.org/project/openviking/0.5.0/",
+    "repository": "https://github.com/volcengine/OpenViking",
+    "plugin_commit": "0fcc1663811914484163993735dfbef2c3ca2080",
+    "plugin_archive": "https://github.com/volcengine/OpenViking/archive/0fcc1663811914484163993735dfbef2c3ca2080.zip",
+    "plugin_version": "0.11.11"
+  },
+  "llama_cpp_python": {
+    "package": "llama-cpp-python==0.3.36",
+    "metadata": "https://pypi.org/pypi/llama-cpp-python/0.3.36/json",
+    "repository": "https://github.com/abetlen/llama-cpp-python",
+    "patch": "force GGML_METAL OFF in Apple CMake block"
+  },
+  "embedding_model": {
+    "model": "bge-small-zh-v1.5-f16",
+    "dimension": 512,
+    "download": "https://huggingface.co/CompendiumLabs/bge-small-zh-v1.5-gguf/resolve/main/bge-small-zh-v1.5-f16.gguf?download=true",
+    "sha256_reference": "ab9b81d9cd329c712eee379cf0068eabe6a5e2a01d0def61535eba9384085e2c",
+    "bytes_reference": 47886240
+  },
+  "capture": {
+    "upstream": "https://github.com/benthamite/chatgpt-sync",
+    "commit": "130db9910c7d0dd05d01db2ae87faa80cc2a1f91",
+    "archive": "https://github.com/benthamite/chatgpt-sync/archive/130db9910c7d0dd05d01db2ae87faa80cc2a1f91.zip",
+    "license": "MIT"
+  }
+}

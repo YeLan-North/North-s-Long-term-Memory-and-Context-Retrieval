@@ -1,0 +1,10 @@
+settings.json
+runtime/
+vendor/
+.venv/
+capture/config.json
+capture/data/
+capture/state/
+private/
+__pycache__/
+*.pyc

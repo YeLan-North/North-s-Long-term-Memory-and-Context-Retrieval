@@ -1,0 +1,8 @@
+{
+  "project_ids": ["g-p-REPLACE-WITH-YOUR-PROJECT-ID"],
+  "timezone": "America/Vancouver",
+  "assistant_name": "Assistant",
+  "sender_email": "sender@example.com",
+  "recipient_email": "recipient@example.com",
+  "memory_collection": "my-memory-v1"
+}

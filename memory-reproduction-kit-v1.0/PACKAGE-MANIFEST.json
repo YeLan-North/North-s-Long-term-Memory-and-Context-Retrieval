@@ -1,0 +1,226 @@
+{
+  "version": "1.0",
+  "privacy_scan": "passed known private markers and credential patterns",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 115,
+      "sha256": "1085fadc56aa38dcec2020f3cd4bc550ac250c3c40f563d7c26ae1b55c06a19c"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1093,
+      "sha256": "feb7ff35242cf68fd5ec5873cb70c23656c4372b627c98210ee22b895c3217e6"
+    },
+    {
+      "path": "NOTICE.md",
+      "bytes": 1299,
+      "sha256": "ca3c4971074b5c606f58576f4bbbceaaedeef1bf23406a9680f9a82160782d57"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1151,
+      "sha256": "c2381b00e209dc2073e2c450b58ad0881d6365204ce93f7b3121921c492a384a"
+    },
+    {
+      "path": "VALIDATION.md",
+      "bytes": 2059,
+      "sha256": "2cb7d71f1137ace77c85f7184e199c73fac471876e1882ad3f51700690999974"
+    },
+    {
+      "path": "capture/CHANGES.md",
+      "bytes": 1351,
+      "sha256": "0661021d7d9f87ce87537ad18099f277d3d4aaa8c41dee85820c9fafa6d5547d"
+    },
+    {
+      "path": "capture/LICENSE",
+      "bytes": 1073,
+      "sha256": "c7076ea714fb51431247c18c0fe480eb39703a8c6c1d978e2fd95efe5e5d8a7f"
+    },
+    {
+      "path": "capture/Start-Capture.command",
+      "bytes": 214,
+      "sha256": "b7a72b108522f5dac8e298164ab2465b1e23aac63c629c62cb99d4765957767a"
+    },
+    {
+      "path": "capture/bin/chatgpt-sync",
+      "bytes": 35820,
+      "sha256": "7d557cdba346095e60a2ecfc6b80fd8af79207ea87b35acb27406cb7a4a5bf64"
+    },
+    {
+      "path": "capture/config.json",
+      "bytes": 83,
+      "sha256": "aa7045496a6c4ac5a8e0af7c7213edf467ab2b3d2954143cd694160266f83dc8"
+    },
+    {
+      "path": "capture/extension/background.js",
+      "bytes": 9906,
+      "sha256": "aeacf15215628114bf8918fb13dd910f1ed3c1ef122524c9c728c9d057d4ee93"
+    },
+    {
+      "path": "capture/extension/content.js",
+      "bytes": 232,
+      "sha256": "ec71fcfcc32a217c2f9f1a5ae00c4836b09224471e72a196b07c12e936a8004e"
+    },
+    {
+      "path": "capture/extension/icons/icon.svg",
+      "bytes": 437,
+      "sha256": "c51e5e636426f73538e540a73ce42e5ab7b18facaa6e39db69eaa91adfff0a9b"
+    },
+    {
+      "path": "capture/extension/icons/icon128.png",
+      "bytes": 4700,
+      "sha256": "49756fcb6a0750c371d82c30fee6a04a96f3bb1c16a14af3ab459e8e07182b2d"
+    },
+    {
+      "path": "capture/extension/icons/icon16.png",
+      "bytes": 617,
+      "sha256": "eee08423f4dd544f5d3f850af0f217100e0bbf7ef52150454cf63c779bc89507"
+    },
+    {
+      "path": "capture/extension/icons/icon32.png",
+      "bytes": 1168,
+      "sha256": "48d10d2ea796e102b498ada0132b3096e9057ed0e5302792b65b6f885b1a0353"
+    },
+    {
+      "path": "capture/extension/icons/icon48.png",
+      "bytes": 1879,
+      "sha256": "148af9d5f546f46796bc20fcc936465d57d2f03ac9e1ea42285a8de611bd846b"
+    },
+    {
+      "path": "capture/extension/manifest.json",
+      "bytes": 1331,
+      "sha256": "07eca72131a430867c50d8452eeca64abeb145151a4be4beb381c362e2904366"
+    },
+    {
+      "path": "capture/extension/popup.html",
+      "bytes": 1092,
+      "sha256": "3f9774b3a5d6201bcf9e58e6d5fd07426dec629921eb44561119850732ed3145"
+    },
+    {
+      "path": "capture/extension/popup.js",
+      "bytes": 1534,
+      "sha256": "dd6b459b40a367d531f2810e39130a179e0d6198edbe948b951e9f6a45e2dcb1"
+    },
+    {
+      "path": "capture/tests/test_background.cjs",
+      "bytes": 4525,
+      "sha256": "870429697c100a8bb3712313f5cd71b21e318fabe8a25414fac45177752bb9c0"
+    },
+    {
+      "path": "capture/tests/test_capture_reliability.py",
+      "bytes": 4002,
+      "sha256": "6980410e1fee1d839c07a2619d918f74bb1158f58bd74de08a38200b326a1d40"
+    },
+    {
+      "path": "capture/tests/test_chatgpt_sync.py",
+      "bytes": 10408,
+      "sha256": "33714d8844b843a004ace503569d738d1147fd48f8ed429c2bf18f0334c511a6"
+    },
+    {
+      "path": "dependency-sources.json",
+      "bytes": 1317,
+      "sha256": "77c7717094ef18f9960b938a851e230fa558406ae937a1a1e3a89b67c39733cd"
+    },
+    {
+      "path": "memory-guide.html",
+      "bytes": 43371,
+      "sha256": "d243d917769cd6ad07d7a46f0e208f9ef69c62bcd44cfdee99f0716cf12a9915"
+    },
+    {
+      "path": "reference-environment.txt",
+      "bytes": 3459,
+      "sha256": "ad0b646f5d73aa3ed911cd9a3e3399010b6204fe4aad48ff91fe33ecabc464fc"
+    },
+    {
+      "path": "scripts/build_cpu_llama.py",
+      "bytes": 2651,
+      "sha256": "4df9c1919dc7cf2da469129ee767d0bd00c5f3884bd15031773562b07228ee9a"
+    },
+    {
+      "path": "scripts/check_token_budget.py",
+      "bytes": 980,
+      "sha256": "0cad65e569666bea39b1595b45b18d78afc0cf3a01a14b7d93e6fabc242ae81c"
+    },
+    {
+      "path": "scripts/configure.py",
+      "bytes": 3257,
+      "sha256": "e713e4a3b8c852e2acce62d9560938bd0253680ab51ac339e1646149157a87e1"
+    },
+    {
+      "path": "scripts/export_reader.py",
+      "bytes": 5560,
+      "sha256": "937deb3cef77ee0fbb7c8a87399b7826980024eb533ac4e81e1e6d7a1be44d49"
+    },
+    {
+      "path": "scripts/make_passages.py",
+      "bytes": 3166,
+      "sha256": "454327423cecec280bf98a1ea0ce44345a322bbbaab1f6b2ae1a0c8e04d0a652"
+    },
+    {
+      "path": "scripts/memory_cli.py",
+      "bytes": 3753,
+      "sha256": "ebe80d72a0321024504123ea811b3f9df760266582110d99bcc3bf5dcb13b5a9"
+    },
+    {
+      "path": "scripts/prepare_plugin.py",
+      "bytes": 3469,
+      "sha256": "fcbe1009a2357df412fc07415650acb904295c2e7fbbf5a2dbec1c88cf49cd65"
+    },
+    {
+      "path": "scripts/start-memory.command",
+      "bytes": 161,
+      "sha256": "7d46f7f07cf7e6848b405f92ef9bc82034a07e1117566aec20e2a110cd992a18"
+    },
+    {
+      "path": "scripts/verify_package.py",
+      "bytes": 766,
+      "sha256": "8f10d6379b5cae320f391e01a72836be3271f9dbba3a8dee894740fe0c21a3f6"
+    },
+    {
+      "path": "settings.example.json",
+      "bytes": 251,
+      "sha256": "d7ce77a981e9949f4fca3afd7fffbd4c4939817d8060ea19fda7ee076c164122"
+    },
+    {
+      "path": "templates/card-example.md",
+      "bytes": 338,
+      "sha256": "ce9c2f9f3b82343aeea0802b9b74f494c27d07413bc28f177c8de2895a3a7929"
+    },
+    {
+      "path": "templates/chat-recall.md",
+      "bytes": 993,
+      "sha256": "ca07ee3dbd9a4519641d4f2cbf4ae583d129bd6ab29049732dd6f969e367c0fe"
+    },
+    {
+      "path": "templates/daily-task.md",
+      "bytes": 3229,
+      "sha256": "c346ec7b6af2663aefef4facc8b05489d6cc17a29a3c69fd949d79123e03dd04"
+    },
+    {
+      "path": "templates/initial-import.md",
+      "bytes": 1593,
+      "sha256": "ea2d22b6921bf5fec7f45e36664ec1c72c02b249e2e5eb771234ce22be5de4bf"
+    },
+    {
+      "path": "templates/migration-sample.md",
+      "bytes": 1171,
+      "sha256": "87e6e2298c6d47cf4048181ebfdd6c5107620a600c117e1a2637522b54827d0f"
+    },
+    {
+      "path": "templates/weekly-merge.md",
+      "bytes": 1551,
+      "sha256": "c5d9b990abdc4dac4e8e800ce502c9555c005c114a51c131076ba7224d3d93ee"
+    },
+    {
+      "path": "tests/test_toolkit.py",
+      "bytes": 3256,
+      "sha256": "b36c88312f7a070019b7961ce090b2bdcd31d1e1db38fe10448d922d51141d92"
+    },
+    {
+      "path": "长期记忆与历史保存复现教程.md",
+      "bytes": 36905,
+      "sha256": "1e7febf8a2ee6d1eced16ceb899ef61e29ce550b06b552e6b6bc19dad9811f1e"
+    }
+  ]
+}

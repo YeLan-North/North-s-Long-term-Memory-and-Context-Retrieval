@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><title>Project Chat Capture</title>
+<style>body{font:14px system-ui,sans-serif;width:340px;margin:18px;color:#183448;background:#f8fbfd}h1{font-size:17px;margin:0 0 12px}p{line-height:1.6}.error{color:#a32b36;overflow-wrap:anywhere}.muted{color:#526676}button{padding:8px 12px;margin:6px 6px 0 0;border:1px solid #b7cbd8;border-radius:7px;background:white;cursor:pointer}pre{max-height:220px;overflow:auto;white-space:pre-wrap;font-size:11px}[hidden]{display:none}</style>
+</head><body><h1>Project Chat Capture · 试验版</h1><p class="muted">只采集配置中指定的项目，保存到这台电脑。</p>
+<p id="state">正在读取状态…</p><p id="error" class="error" hidden></p>
+<p id="login" hidden>登录已过期。请在浏览器登录 ChatGPT，再重试。</p><p id="last" class="muted"></p>
+<button id="sync">立即同步</button><button id="report">保存采集清单</button>
+<details><summary>本次详情与缺失项</summary><pre id="details"></pre></details>
+<script src="popup.js"></script></body></html>
