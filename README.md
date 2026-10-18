@@ -24,6 +24,26 @@
 
 请从干净包开始，填写自己的 `settings.json`。使用后产生的 `runtime/`、`settings.json`、`capture/data/`、`capture/state/` 属于私有数据，不要重新公开上传。
 
+## 参考测试环境
+
+本项目于 2026 年 10 月 18 日在以下环境中测试：
+
+| 项目 | 环境 |
+|---|---|
+| 助手应用 | Codex Desktop 26.1013.40934 |
+| 操作系统 | macOS Tahoe 26.2 |
+| 硬件 | MacBook Pro 13 英寸，2020，Apple M1, 16GB |
+| 浏览器 | Google Chrome 155.0.8059.82（正式版本） (arm64) |
+| Python | 3.13 |
+| Node.js | 插件要求 22+；本机具体版本未记录 |
+| OpenViking | 0.5.0 |
+| OpenViking 官方插件 | 0.11.11，固定提交 `0fcc1663811914484163993735dfbef2c3ca2080` |
+| llama-cpp-python | 0.3.36，本地 CPU 构建，关闭 Metal |
+| 嵌入模型 | `bge-small-zh-v1.5-f16.gguf`，512 维 |
+| 日期处理与任务时区 | `America/Vancouver` |
+
+已验证本地采集、按日导出、历史转换、原文分片、语义检索、手动生成日记及邮件附件发送。
+
 ## 来源与许可
 
 采集组件基于 [benthamite/chatgpt-sync](https://github.com/benthamite/chatgpt-sync)，保留原 MIT 许可证；新增通用材料采用 MIT。OpenViking、官方插件、模型及第三方依赖通过教程中的原始链接另行下载。
