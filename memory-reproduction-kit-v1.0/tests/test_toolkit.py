@@ -1,4 +1,4 @@
-import importlib.util,json,subprocess,sys,tempfile,unittest
+import importlib.util,json,shutil,subprocess,sys,tempfile,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
@@ -43,5 +43,27 @@ class Tests(unittest.TestCase):
     def test_cycle_rejected(self):
         c=synthetic();c['mapping']['root']['parent']='b'
         with self.assertRaises(ValueError):capture_module('UTC')['daily_rows'](c,None,None)
+
+    def test_configurable_daily_boundary_and_legacy_default(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            kit=Path(tmp)/'kit'
+            shutil.copytree(ROOT,kit,ignore=shutil.ignore_patterns('__pycache__','runtime','vendor'))
+            settings=json.loads((kit/'settings.example.json').read_text())
+            settings['project_ids']=['g-p-synthetic-project']
+            settings['diary_boundary']='06:30'
+            path=kit/'settings.json';path.write_text(json.dumps(settings))
+            command=[sys.executable,str(kit/'scripts/configure.py')]
+            result=subprocess.run(command,capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            instruction=(kit/'runtime/instructions/daily-task.md').read_text()
+            self.assertIn('--boundary 06:30',instruction)
+            self.assertIn('chatgpt-window verify',instruction)
+            self.assertIn('publication_ready=true',instruction)
+            self.assertNotIn('{{',instruction)
+            del settings['diary_boundary'];path.write_text(json.dumps(settings))
+            self.assertEqual(subprocess.run(command,capture_output=True).returncode,0)
+            self.assertIn('--boundary 00:00',(kit/'runtime/instructions/daily-task.md').read_text())
+            settings['diary_boundary']='25:00';path.write_text(json.dumps(settings))
+            self.assertNotEqual(subprocess.run(command,capture_output=True).returncode,0)
 
 if __name__=='__main__':unittest.main()

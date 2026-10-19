@@ -731,6 +731,19 @@ def ordered_nodes(conv):
 def daily_rows(conv, project_id, date):
     start = dt.datetime.combine(date, dt.time.min, TZ).timestamp() if date else float("-inf")
     end = dt.datetime.combine(date + dt.timedelta(days=1), dt.time.min, TZ).timestamp() if date else float("inf")
+    return _rows_between(conv, project_id, start, end)
+
+
+def range_rows(conv, project_id, start, end):
+    """Select an explicit aware, half-open interval; compare instants across DST."""
+    if start.tzinfo is None or end.tzinfo is None or start.utcoffset() is None or end.utcoffset() is None:
+        raise ValueError("start and end require explicit timezone offsets")
+    if start.timestamp() >= end.timestamp():
+        raise ValueError("start must precede end")
+    return _rows_between(conv, project_id, start.timestamp(), end.timestamp())
+
+
+def _rows_between(conv, project_id, start, end):
     active, key = set(), conv.get("current_node")
     while key in conv["mapping"]:
         if key in active:
@@ -828,6 +841,14 @@ def cmd_day(args):
         raise SystemExit(2)
 
 
+def cmd_window(args):
+    command = [sys.executable, os.path.join(REPO, "bin", "chatgpt-window"),
+               "prepare", "--start", args.start, "--end", args.end, "--output", args.output]
+    if args.timezone:
+        command.extend(["--timezone", args.timezone])
+    raise SystemExit(subprocess.call(command))
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -843,6 +864,12 @@ def main() -> None:
     day.add_argument("--date", required=True, help="YYYY-MM-DD")
     day.add_argument("--output")
     day.set_defaults(func=cmd_day)
+    window = sub.add_parser("window", help="Export and audit any timezone-aware interval")
+    window.add_argument("--start", required=True, help="ISO 8601 timestamp with offset; inclusive")
+    window.add_argument("--end", required=True, help="ISO 8601 timestamp with offset; exclusive")
+    window.add_argument("--timezone", help="IANA timezone used for calendar-day reconciliation")
+    window.add_argument("--output", required=True, help="New bundle directory; never overwrite sources")
+    window.set_defaults(func=cmd_window)
     args = p.parse_args()
     args.func(args)
 

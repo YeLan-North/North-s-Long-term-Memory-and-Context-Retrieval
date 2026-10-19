@@ -1,6 +1,7 @@
 {
-  "version": "1.0",
-  "privacy_scan": "passed known private markers and credential patterns",
+  "version": "1.1",
+  "capture_version": "0.7.0",
+  "scope": "allowlisted source only; excludes runtime, real settings, capture data/state and caches",
   "files": [
     {
       "path": ".gitignore",
@@ -19,18 +20,23 @@
     },
     {
       "path": "README.md",
-      "bytes": 1151,
-      "sha256": "c2381b00e209dc2073e2c450b58ad0881d6365204ce93f7b3121921c492a384a"
+      "bytes": 1817,
+      "sha256": "403e52d8e6e80d586ed932287d0582d5bae79df2d344c674340353a3ab777e56"
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 2059,
-      "sha256": "2cb7d71f1137ace77c85f7184e199c73fac471876e1882ad3f51700690999974"
+      "bytes": 3854,
+      "sha256": "fee08826bf9e19d91a8f078bff4423e4165b4ee26e634b7efefa819d47f721a4"
+    },
+    {
+      "path": "WINDOWS.md",
+      "bytes": 4540,
+      "sha256": "296d4525ed9268bd32e0465f1ca09038152b10bdca7c026ce806fcdc97cd0509"
     },
     {
       "path": "capture/CHANGES.md",
-      "bytes": 1351,
-      "sha256": "0661021d7d9f87ce87537ad18099f277d3d4aaa8c41dee85820c9fafa6d5547d"
+      "bytes": 2144,
+      "sha256": "08216d99ca27363e3663d87fdd9e13550dbfdf20c9ab1001a43cbd65ab1f9ca3"
     },
     {
       "path": "capture/LICENSE",
@@ -43,9 +49,19 @@
       "sha256": "b7a72b108522f5dac8e298164ab2465b1e23aac63c629c62cb99d4765957767a"
     },
     {
+      "path": "capture/bin/aster-diary",
+      "bytes": 523,
+      "sha256": "77ccb67d7d8263532bbc8931d00b1d7aaa5436e3aea04e5d855c9a8adff5a71b"
+    },
+    {
       "path": "capture/bin/chatgpt-sync",
-      "bytes": 35820,
-      "sha256": "7d557cdba346095e60a2ecfc6b80fd8af79207ea87b35acb27406cb7a4a5bf64"
+      "bytes": 37265,
+      "sha256": "512a7055301c7882cc44fefc7374fbf70b9adcaa7dc99f976d2a07e61b304342"
+    },
+    {
+      "path": "capture/bin/chatgpt-window",
+      "bytes": 15572,
+      "sha256": "9b23ab337ba9cb5e94cb345eb9eaaa76f22f551ba11a47c610d1dbffc892ae77"
     },
     {
       "path": "capture/config.json",
@@ -118,14 +134,19 @@
       "sha256": "33714d8844b843a004ace503569d738d1147fd48f8ed429c2bf18f0334c511a6"
     },
     {
+      "path": "capture/tests/test_window.py",
+      "bytes": 11117,
+      "sha256": "3f36945008211cd37c8bba1bf1c43998cf9aee2056e3ca390fd824b479dd8051"
+    },
+    {
       "path": "dependency-sources.json",
       "bytes": 1317,
       "sha256": "77c7717094ef18f9960b938a851e230fa558406ae937a1a1e3a89b67c39733cd"
     },
     {
       "path": "memory-guide.html",
-      "bytes": 43371,
-      "sha256": "d243d917769cd6ad07d7a46f0e208f9ef69c62bcd44cfdee99f0716cf12a9915"
+      "bytes": 50035,
+      "sha256": "33d21f820a5f4855250f896c13c59f5fd426c0922001a331ff539e00aa86c2b0"
     },
     {
       "path": "reference-environment.txt",
@@ -138,14 +159,19 @@
       "sha256": "4df9c1919dc7cf2da469129ee767d0bd00c5f3884bd15031773562b07228ee9a"
     },
     {
+      "path": "scripts/build_package.py",
+      "bytes": 2863,
+      "sha256": "68b9c47b45830016a3e87b073fd83446f59edb023d613183a9e1e4a2bb47c151"
+    },
+    {
       "path": "scripts/check_token_budget.py",
       "bytes": 980,
       "sha256": "0cad65e569666bea39b1595b45b18d78afc0cf3a01a14b7d93e6fabc242ae81c"
     },
     {
       "path": "scripts/configure.py",
-      "bytes": 3257,
-      "sha256": "e713e4a3b8c852e2acce62d9560938bd0253680ab51ac339e1646149157a87e1"
+      "bytes": 3670,
+      "sha256": "ffb55efb2777d08d54ef2c26c35c120d25ffcf393cb155c606bf6a052e9d4a89"
     },
     {
       "path": "scripts/export_reader.py",
@@ -179,8 +205,8 @@
     },
     {
       "path": "settings.example.json",
-      "bytes": 251,
-      "sha256": "d7ce77a981e9949f4fca3afd7fffbd4c4939817d8060ea19fda7ee076c164122"
+      "bytes": 288,
+      "sha256": "d86898dc3388e3379a3b8559d9f2fdc912deba1d2e931638016dbf4865ded217"
     },
     {
       "path": "templates/card-example.md",
@@ -194,8 +220,8 @@
     },
     {
       "path": "templates/daily-task.md",
-      "bytes": 3229,
-      "sha256": "c346ec7b6af2663aefef4facc8b05489d6cc17a29a3c69fd949d79123e03dd04"
+      "bytes": 5397,
+      "sha256": "a0f1cf54825322cfc055236d480d71fde8a91326ccbec8cbadaf7f361a9daf51"
     },
     {
       "path": "templates/initial-import.md",
@@ -214,13 +240,13 @@
     },
     {
       "path": "tests/test_toolkit.py",
-      "bytes": 3256,
-      "sha256": "b36c88312f7a070019b7961ce090b2bdcd31d1e1db38fe10448d922d51141d92"
+      "bytes": 4736,
+      "sha256": "79db1beff292ecb16641c7f66b90d61e0d730ee1b89430a76afd26e4467b62e0"
     },
     {
       "path": "长期记忆与历史保存复现教程.md",
-      "bytes": 36905,
-      "sha256": "1e7febf8a2ee6d1eced16ceb899ef61e29ce550b06b552e6b6bc19dad9811f1e"
+      "bytes": 38556,
+      "sha256": "abba5f213cee0c6db076bcbc7cd68346a4e8fbd25b94da04e2ce6127778ae9eb"
     }
   ]
 }

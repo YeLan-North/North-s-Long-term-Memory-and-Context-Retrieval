@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate only local package configuration; never edit global host settings."""
-import argparse, json, re
+import argparse, datetime as dt, json, re
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -17,6 +17,13 @@ def main():
     if not isinstance(ids, list) or not ids or any(not isinstance(x,str) or not re.fullmatch(r'g-p-[A-Za-z0-9-]+', x) or 'REPLACE' in x for x in ids):
         raise SystemExit('请先填写实际项目 ID；不接受空白名单或示例值。')
     ZoneInfo(s['timezone'])
+    boundary = s.get('diary_boundary', '00:00')
+    if not isinstance(boundary, str) or not re.fullmatch(r'\d{2}:\d{2}(?::\d{2})?', boundary):
+        raise SystemExit('diary_boundary 必须为本地 HH:MM 或 HH:MM:SS。')
+    try:
+        dt.time.fromisoformat(boundary)
+    except ValueError:
+        raise SystemExit('diary_boundary 超出有效时间范围。')
     if not re.fullmatch(r'[a-zA-Z0-9_-]+', s['memory_collection']):
         raise SystemExit('memory_collection 仅允许英文字母、数字、下划线和短横线。')
     runtime = ROOT/'runtime'
@@ -36,7 +43,7 @@ def main():
            'OPENVIKING_RECALL_COMPRESS_DETECT_ON_STARTUP':'0'}
     write(runtime/'plugin-env.json',env)
     replacements = {'{{KIT_ROOT}}':str(ROOT),'{{PROJECT_IDS}}':', '.join(ids),'{{TIMEZONE}}':s['timezone'],
-                    '{{ASSISTANT}}':s['assistant_name'],'{{SENDER}}':s['sender_email'],'{{RECIPIENT}}':s['recipient_email'],
+                    '{{DIARY_BOUNDARY}}':boundary,'{{ASSISTANT}}':s['assistant_name'],'{{SENDER}}':s['sender_email'],'{{RECIPIENT}}':s['recipient_email'],
                     '{{MEMORY_ROOT}}':'viking://user/default/resources/'+s['memory_collection']}
     for source in (ROOT/'templates').glob('*.md'):
         text=source.read_text(encoding='utf-8')

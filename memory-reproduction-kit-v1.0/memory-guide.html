@@ -1,8 +1,65 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>长期记忆与历史保存复现教程</title><style>body{font:16px/1.85 system-ui,-apple-system,sans-serif;color:#263342;background:#f3f5f7;margin:0}main{max-width:1040px;margin:30px auto;background:#fff;padding:45px;border-radius:14px}h1{font-size:31px;line-height:1.4}h2{margin-top:2.5em;border-bottom:1px solid #dce2e8;padding-bottom:.3em}h3{margin-top:1.8em}a{color:#245d94;overflow-wrap:anywhere}p,li{overflow-wrap:anywhere}pre{background:#172330;color:#eef4fb;padding:18px;border-radius:8px;overflow-x:auto;line-height:1.6}code{font-size:.9em}table{border-collapse:collapse;width:100%;font-size:14px;display:block;overflow-x:auto}td,th{padding:10px 13px;border:1px solid #d8e1ea;text-align:left}th{background:#eaf0f5}@media(max-width:700px){main{padding:22px;margin:0;border-radius:0}}@media print{main{margin:0;padding:0;max-width:none}pre{white-space:pre-wrap;background:#eee;color:#111}h2,h3{break-after:avoid}tr{break-inside:avoid}}</style></head><body><main><h1>长期记忆与历史上下文保存：完整复现教程</h1>
-<p>版本1.0 · 2026-10-18 · 去个人化公开版</p>
+<p>版本1.1 · 2026-10-19 · 去个人化公开版</p>
 <p>本教程从一套实际运行过的配置整理而来。它把原始历史保存、日常日记、分层档案和语义检索连接起来，供其他用户和能调用本机工具的GPT助手复现。文档不包含原用户的真实聊天、身份、邮箱、角色档案或项目标识。</p>
 <p><strong>先理解最终能力：你可以保存指定ChatGPT项目的历史，按每天的消息写细节日记，定期把重要内容整理成长期档案，并在聊天时检索原文。它不复制模型本身，不扩大模型上下文窗口，也不保证任何聊天界面都会自动注入记忆。</strong></p>
-<h2>1. 功能与流程</h2>
+<h2>v1.1 更新：时间窗与升级</h2><p>支持任意带时区起止时间、可配置每日分界及多日窗口，按消息ID集合核对并验证逐消息叙事去向。已有用户须更新程序和实际任务，详见下面说明；不覆盖旧来源。</p><details><summary>展开完整用法、限制与升级步骤</summary><pre style="white-space:pre-wrap"># 通用时间窗与覆盖核对（v1.1 / capture 0.7.0）
+
+先按教程填写 settings.json 并运行 scripts/configure.py。所有示例从工具包目录运行；不包含固定用户、邮箱、项目白名单或本机路径。
+
+## 显式窗口：起点包含、终点排除
+
+```sh
+python3 capture/bin/chatgpt-sync window \
+  --start 2026-10-18T06:00:00-07:00 \
+  --end 2026-10-19T06:00:00-07:00 \
+  --timezone America/Vancouver \
+  --output runtime/daily/example-unique-run
+```
+
+等价入口为 `python3 capture/bin/chatgpt-window prepare` 加相同参数。任意分钟、同日、跨午夜、跨多日均可；不需要手工导出两天并拼接。两端必须带UTC偏移或Z，不接受无时区时间；可用不同偏移表示同一时区在夏令时前后的时间。
+
+`--timezone` 指定 IANA 时区，用于显示时间和核对所涉自然日；缺省使用采集配置时区。输入偏移表示实际瞬间，将先转换到选定时区，不直接按输入日期字符串拼接。
+
+## 每日边界
+
+在 settings.json 设置 `&quot;diary_boundary&quot;: &quot;06:00&quot;`，重新运行 configure.py，并将新生成的 runtime/instructions/daily-task.md 更新到实际定时任务。默认00:00保持旧版行为。只改任务里描述的时间、不换导出命令，会重新引入风险。
+
+```sh
+python3 capture/bin/chatgpt-window prepare \
+  --date 2026-10-18 --boundary 06:00 --timezone America/Vancouver \
+  --output runtime/daily/daily-example-unique-run
+```
+
+该命令从当地该日06:00到下一日06:00，不固定为24小时。若选择的边界在夏令时切换时重复或不存在，命令退出2，改用带明确偏移的 --start/--end。不能同时指定 --date 和 --start/--end。旧本地任务可用 aster-diary 兼容入口：只有该入口的 --date 默认06:00，仍可显式指定其他分界。
+
+## 三层状态与投递检查
+
+prepare 输出 messages.jsonl、messages.md、manifest.json、coverage.json。目录必须全新，避免覆盖历史来源。
+
+1. **采集状态**：最近一次同步是否成功且白名单一致，仅表示已观察库存的采集结果。
+2. **导出覆盖**：实际窗口结束前的快照、有效消息时间、源文件哈希、原始消息ID集合与按所有所涉自然日合并的ID集合一致。不是用总数相同代替集合核对。
+3. **叙事去向**：逐消息读完后，在 coverage.json 中只填写 status、section、note。状态可用 summarized / quoted / alternative_recorded；section 是正文中的完整Markdown标题行；note 是该条消息的具体处理说明。其余身份字段，包括 occurrences，必须保留。不能只添加对话标题或虚报已读。
+
+```sh
+python3 capture/bin/chatgpt-window verify \
+  --bundle runtime/daily/example-unique-run \
+  --diary /absolute/path/to/diary.md
+```
+
+发送或发布前须检查退出0且本次 verification.json 的 publication_ready=true，再完成实际语义审阅和授权核验。机器不会发送邮件，也不能自动证明正文准确。所有错误返回2，旧verification成功会先失效；来源更新后新建bundle重跑。空窗口可以是合法结果，但缺失文件、错误或partial绝不能被当作合法空集。
+
+## 重复、分支与局限
+
+按对话ID/原始消息ID建立集合。同ID同内容去重，occurrences保留全部原节点、父节点、分支、树顺序；内容冲突中止，不静默采用其中一个版本。替代分支保留，不作为最终成功结果冒充主线。源数据始终只读。
+
+`day` 仍是自然日接口，次日自然日未结束可合法返回partial；不能因此判断已经结束的跨日窗口缺数据。本通用入口只判断实际请求窗口，不依赖某个自然日导出命令的退出状态，也不会在失败后继续宣称完整。
+
+已删除、无法访问或从未列入观测目录的聊天及附件二进制仍不保证覆盖。消息映射和标题检查不能代替阅读用户纠正、双方回应及未决事项。公开仓库与下载包不得包含使用后产生的settings.json、runtime/、capture/data/或capture/state/。
+
+## 升级现有安装
+
+备份现有程序和任务文本，保留自己的配置、原始data/、state/与旧日记。替换 capture/bin 下 chatgpt-sync、chatgpt-window、aster-diary 及新版测试；不要用示例config.json覆盖真实白名单。更新settings中的分界并重新生成指令，再更新实际执行的任务。旧bundle保留为历史来源，新入口对旧格式不会冒充已验证，重新建立新目录即可。
+</pre></details><h2>1. 功能与流程</h2>
 <h3>1.1 数据怎样流动</h3>
 <ol>
 <li>官方导出用于拿到已有历史；Chrome采集插件用于持续同步明确指定的项目。</li>
@@ -283,15 +340,43 @@ cp settings.example.json settings.json
 <p>转换按树的父子关系顺序遍历，每个节点只出现一次；用 <code>current_node</code> 向父链判断当前路径，其他节点标 <code>alternative</code>，保留parent和source_order。当前路径不等于现实或故事主线。工具、分析及隐藏上下文不进入阅读副本，仍应保存在原始JSON。时间缺失的可见消息被列入缺失清单并返回退出码2，不默默归到某天。</p>
 <p>此公开转换器与最初为特定导出编写的专用页面不同，采用通用JSON结构、ID筛选和JSONL来源记录，不依赖原用户的文件行号或档案索引。遇到相同对话不同快照时拒绝自动覆盖，需要先选择保留哪个版本。</p>
 <h2>7. 按日提取、日记、调度与邮件</h2>
-<h3>7.1 先验收按日原文</h3>
-<pre><code class="language-sh">python3 capture/bin/chatgpt-sync day --date 2026-10-17 --output runtime/daily
-</code></pre>
-<p>把日期换成要提取的一天。输出 <code>.jsonl</code>、<code>.md</code>、<code>.manifest.json</code> 三份。日期按配置时区的当地午夜划分，跨日对话只提取当天消息，不以整段对话更新时间判断。</p>
-<p>状态 <code>complete_for_observed_inventory</code> 表示针对已观测目录完成；<code>partial</code> 或退出码2表示有缺口，仍保存已取得内容。快照必须晚于目标日结束；当前未结束的一天不能冒充完整日记。仅修改标题或更新时间而没有当天消息的对话不计入当天。</p>
-<h3>7.2 日记为什么不能只写摘要</h3>
-<p>全文原文继续保留；日记需要保留重要事件的因果、具体对话、用户反馈和未决事项。来源索引让摘要可以回到原话，降低压缩后断章取义的风险。</p>
-<p>使用 <code>runtime/instructions/daily-task.md</code>。先手动测试一个已结束的日期，核对：导出消息数和日记覆盖表一致；真实/虚构分开；没有把未执行的建议写成已完成；没有猜图像或音频；保存后的文件可打开。</p>
-<h3>7.3 创建每日任务</h3>
+<h3>7.1 通用时间窗、日记与发送前验证（v1.1）</h3><pre style="white-space:pre-wrap">先验收时间窗原文
+
+v1.1新增通用窗口入口。`settings.json` 的 `diary_boundary` 默认为 `00:00`，可改为 `06:00`、`06:30` 等；重新运行configure并更新实际定时任务的指令，不能只修改描述。目录名称中的v1.0为兼容保留的路径，当前版本以manifest为准。
+
+```sh
+python3 capture/bin/chatgpt-window prepare --date 2026-10-17 --boundary 06:00 --timezone America/Vancouver --output runtime/daily/2026-10-17-unique-run
+```
+
+范围为当地该日06:00（含）至次日06:00（不含），自动核对全部所涉自然日。任意区间可改用 `--start 2026-10-17T06:00:00-07:00 --end 2026-10-19T08:30:00-07:00`，支持跨多日。显式时间须带偏移；夏令时模糊或不存在的本地边界要求改用显式参数，不猜测。详见[通用时间窗与升级说明](WINDOWS.md)。
+
+程序保留逐消息ID清单，对照原始集合检查遗漏、重复、分支及冲突。失败返回2并标记不完整，不是“没有聊天”。采集成功、导出覆盖与叙事去向分别核对。新输出目录禁止覆盖历史来源。
+
+以下旧day命令仍只用于自然日读取，不作为跨日任务的合并入口：
+
+```sh
+python3 capture/bin/chatgpt-sync day --date 2026-10-17 --output runtime/daily
+```
+
+把日期换成要提取的一天。输出 `.jsonl`、`.md`、`.manifest.json` 三份。日期按配置时区的当地午夜划分，跨日对话只提取当天消息，不以整段对话更新时间判断。
+
+状态 `complete_for_observed_inventory` 表示针对已观测目录完成；`partial` 或退出码2表示有缺口，仍保存已取得内容。快照必须晚于目标日结束；当前未结束的一天不能冒充完整日记。仅修改标题或更新时间而没有当天消息的对话不计入当天。
+
+### 7.2 日记为什么不能只写摘要
+
+全文原文继续保留；日记需要保留重要事件的因果、具体对话、用户反馈和未决事项。来源索引让摘要可以回到原话，降低压缩后断章取义的风险。
+
+使用 `runtime/instructions/daily-task.md`。先手动测试一个已结束的窗口，核对：源与合并消息ID集合一致、coverage.json中每条消息都有正文处理位置；真实/虚构分开；没有把未执行的建议写成已完成；没有猜图像或音频；保存后的文件可打开。
+
+逐条阅读后填写coverage.json的status、section及note，保留全部身份字段。生成后及任何发送前运行：
+
+```sh
+python3 capture/bin/chatgpt-window verify --bundle runtime/daily/2026-10-17-unique-run --diary /absolute/path/to/diary.md
+```
+
+退出0且本次verification.json的publication_ready=true，是投递的必要条件；任何失败、来源变化、未完成核对都只保留本地不完整稿。机器集合和去向验证不代替语义审阅，不能仅因命令通过就声称摘要绝对准确。
+
+</pre><h3>7.3 创建每日任务</h3>
 <p>在支持本地执行的助手应用里手动创建：名称“整理昨日对话并生成日记”；每天13:00；选择自己的IANA时区；执行方式本地；正文复制生成后的日记指令中实际执行部分。设置正确的文件访问范围，模型选择自己账号可用、能充分阅读当天记录的模型。</p>
 <p>不要把本地路径放进普通云端提醒，就期待它访问你的Mac。无法本地执行时，先采用每日手动上传导出文件。应用里只有“提醒”而没有工具执行能力，也不能完成日记流水线。</p>
 <p>生成配置不等于注册了定时任务，本包不直接写宿主内部automation.toml。任务创建后，核对启用状态、时区、下次运行、执行环境和指令。点击“立即运行”测试，再等一次真实定时触发；电脑唤醒与宿主运行要求以实际应用行为为准，本方案建议保持运行。休眠错过的任务是否补跑没有验证，不能作保证。</p>

@@ -5,7 +5,7 @@
 ## 开始使用
 
 - [完整中文教程](memory-reproduction-kit-v1.0/长期记忆与历史保存复现教程.md)
-- [离线复现文件包 ZIP](dist/memory-reproduction-kit-v1.0.zip)（打开后选择 Download raw file）
+- [离线复现文件包 ZIP](dist/memory-reproduction-kit-v1.1.zip)（打开后选择 Download raw file）
 - [源文件与配置模板](memory-reproduction-kit-v1.0/)
 - [验证记录与限制](memory-reproduction-kit-v1.0/VALIDATION.md)
 - [外部依赖来源与固定版本](memory-reproduction-kit-v1.0/dependency-sources.json)
@@ -18,11 +18,25 @@
 
 本地采集与嵌入不要求购买模型 API；日记生成使用自己的助手宿主能力。每日任务需有本机文件访问与工具执行能力，普通云端提醒无法读取 Mac 上的目录。自动钩子与定时触发需要分别验收，不能以安装成功推断全部自动化已生效。
 
-## 复现包 v1.0
+## 复现包 v1.1
 
 包含修改后的项目采集源码、配置生成脚本、官方导出转换工具、CPU 嵌入构建脚本、插件准备工具、原文分片与索引工具、日记/邮件/周归档/记忆读取模板，以及测试和来源说明。
 
 请从干净包开始，填写自己的 `settings.json`。使用后产生的 `runtime/`、`settings.json`、`capture/data/`、`capture/state/` 属于私有数据，不要重新公开上传。
+
+## v1.1 更新说明 · 2026-10-19
+
+修复修改日记时间窗后可能漏收跨日聊天、却仍声称完整的问题。只改任务描述而继续导出单个自然日，或把次日自然日的partial误当作凌晨无消息，都会有遗漏风险。
+
+- 支持任意显式带时区的 `--start/--end`，以及可配置每日分界 `diary_boundary`（默认00:00，支持06:00等）；自动覆盖全部所涉自然日，包括多日窗口。
+- 使用IANA时区和实际时间戳处理夏令时；重复或不存在的当地分界必须明确两端偏移。
+- 核对原始消息ID集合与合并集合，保留对话、时间、分支及重复节点位置；冲突、缺失或来源变化拒绝通过。
+- 分开报告采集、导出和叙事去向；新增逐消息coverage及投递前verify。未完成核对只保存本地不完整稿，不能宣称完整或投递。
+- 更新每日任务模板、配置生成器、教程、测试与ZIP。机器验证是必要条件，仍需实际语义审阅；不保证不可访问聊天或附件二进制。
+
+[时间窗用法与升级步骤](memory-reproduction-kit-v1.0/WINDOWS.md) · [v1.1下载包](dist/memory-reproduction-kit-v1.1.zip)
+
+已有用户需更新代码、填写分界、重新生成指令并更新**实际运行的定时任务**；安装目录名保留v1.0以兼容路径，manifest版本为1.1。保留自己的settings/config、原始数据及旧日记，勿用空白模板覆盖。旧v1.0 ZIP仅作历史留存，不建议继续用于日记任务。
 
 ## 关于每周归档
 

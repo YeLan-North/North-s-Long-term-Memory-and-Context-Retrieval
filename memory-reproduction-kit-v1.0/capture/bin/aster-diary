@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+"""Compatibility entry: --date still defaults to 06:00; explicit windows supported."""
+import importlib.machinery
+import importlib.util
+from pathlib import Path
+import sys
+
+loader = importlib.machinery.SourceFileLoader('general_window', str(Path(__file__).with_name('chatgpt-window')))
+spec = importlib.util.spec_from_loader(loader.name, loader)
+window = importlib.util.module_from_spec(spec)
+loader.exec_module(window)
+
+if __name__ == '__main__':
+    sys.exit(window.main(default_boundary='06:00'))
